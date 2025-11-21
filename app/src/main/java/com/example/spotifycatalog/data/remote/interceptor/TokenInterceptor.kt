@@ -1,6 +1,5 @@
 package com.example.spotifycatalog.data.remote.interceptor
 
-import android.util.Log
 import com.example.spotifycatalog.core.constatnts.HttpConstants
 import com.example.spotifycatalog.data.remote.api.AuthApiSync
 import com.example.spotifycatalog.data.remote.manager.TokenManager
@@ -21,10 +20,8 @@ class TokenInterceptor(
                 clientId = clientId,
                 clientSecret = clientSecret
             ).execute()
-            Log.e("TESTING", "Entra despues de la llamada")
 
             if (tokenResponse.isSuccessful) {
-                Log.e("TESTING", "Entra token response ${tokenResponse.body()}")
                 val body = tokenResponse.body()
                 if (body != null) {
                     tokenManager.saveTokenBlocking(body.accessToken, body.expiresIn)
@@ -32,7 +29,6 @@ class TokenInterceptor(
                 }
             }
         }
-        Log.e("TESTING", "Entra luego del bloque $token")
         val request = chain.request().newBuilder()
             .addHeader(
                 HttpConstants.HEADER_AUTHORIZATION,

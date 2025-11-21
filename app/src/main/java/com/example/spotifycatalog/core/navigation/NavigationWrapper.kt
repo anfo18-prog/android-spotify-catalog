@@ -23,6 +23,7 @@ fun NavigationWrapper(navController: NavHostController = rememberNavController()
             val id = backStack.arguments?.getString("id") ?: return@composable
             ArtistAlbumsScreen(
                 id = id,
+                navController = navController,
                 onAlbumClick = { albumId ->
                     navController.navigate("album/$albumId")
                 }
@@ -30,7 +31,7 @@ fun NavigationWrapper(navController: NavHostController = rememberNavController()
         }
         composable("album/{albumId}") { backStack ->
             val albumId = backStack.arguments?.getString("albumId") ?: return@composable
-            AlbumTracksScreen(albumId = albumId)
+            AlbumTracksScreen(albumId = albumId, navController = navController)
         }
     }
 }

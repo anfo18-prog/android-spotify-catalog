@@ -5,6 +5,8 @@ import com.example.spotifycatalog.domain.model.Album
 import com.example.spotifycatalog.domain.model.Artist
 import com.example.spotifycatalog.domain.usecase.GetAlbumsForArtistUseCase
 import com.example.spotifycatalog.domain.usecase.GetArtistUseCase
+import com.example.spotifycatalog.presentation.album_tracks.AlbumTracksUiState
+import com.example.spotifycatalog.presentation.album_tracks.AlbumTracksViewModel
 import com.example.spotifycatalog.presentation.artist_albums.ArtistAlbumsUiState
 import com.example.spotifycatalog.presentation.artist_albums.ArtistAlbumsViewModel
 import io.mockk.coEvery
@@ -73,6 +75,20 @@ class ArtistAlbumsViewModelTest {
             // Final success state
             val success = awaitItem() as ArtistAlbumsUiState.Success
             assertEquals(2, success.albums.size)
+        }
+    }
+
+    @Test
+    fun `loadArtist emits Error when use case throws`() = runTest {
+        val artistId = "123"
+        val errorMessage = "Network failure"
+        coEvery { getArtistUseCase(artistId) } throws RuntimeException(errorMessage)
+        viewModel = ArtistAlbumsViewModel(getArtistUseCase, getAlbumsForArtistUseCase)
+        viewModel.uiState.test {
+            viewModel.loadArtist(artistId)
+            assertEquals(ArtistAlbumsUiState.Loading, awaitItem())
+            val error = awaitItem() as ArtistAlbumsUiState.Error
+            assertEquals(errorMessage, error.message)
         }
     }
 }

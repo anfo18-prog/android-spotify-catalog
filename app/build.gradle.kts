@@ -92,6 +92,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.material.icons.core)
+    implementation(libs.material.icons.extended)
 
     // Coroutines
     implementation(libs.coroutines.android)
@@ -116,6 +118,10 @@ dependencies {
 
     // Storage
     implementation(libs.datastore.preferences)
+
+    // Images
+    implementation(libs.coil.base)
+    implementation(libs.coil.compose)
 
     // Testing
     testImplementation(libs.junit)

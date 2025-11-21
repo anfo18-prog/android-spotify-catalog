@@ -30,7 +30,7 @@ class AlbumTracksViewModelTest {
     }
 
     @Test
-    fun `loadArtist returns artists successfully`() = runTest {
+    fun `loadTracks returns artists successfully`() = runTest {
         // Arrange
         val albumId = "123"
         val tracks = listOf(
@@ -59,6 +59,21 @@ class AlbumTracksViewModelTest {
             // Final success state
             val success = awaitItem() as AlbumTracksUiState.Success
             assertEquals(2, success.tracks.size)
+        }
+    }
+
+    @Test
+    fun `loadTracks emits Error when use case throws`() = runTest {
+        val albumId = "123"
+        val errorMessage = "Network failure"
+        coEvery { getTracksForAlbumUseCase(albumId, limit = 20, offset = 0) } throws RuntimeException(errorMessage)
+        viewModel = AlbumTracksViewModel(getTracksForAlbumUseCase)
+        viewModel = AlbumTracksViewModel(getTracksForAlbumUseCase)
+        viewModel.uiState.test {
+            viewModel.loadTracks(albumId)
+            assertEquals(AlbumTracksUiState.Loading, awaitItem())
+            val error = awaitItem() as AlbumTracksUiState.Error
+            assertEquals(errorMessage, error.message)
         }
     }
 }
