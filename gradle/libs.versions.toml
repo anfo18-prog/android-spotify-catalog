@@ -21,6 +21,7 @@ moshi = "1.15.2"
 datastore = "1.2.0"
 coil = "2.7.0"
 composeIcons = "1.6.7"
+splash = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +58,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "composeIcons" }
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeIcons" }
+splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "splash" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

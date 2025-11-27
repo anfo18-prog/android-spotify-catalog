@@ -17,4 +17,7 @@ interface SpotifyRepository {
         limit: Int = 20,
         offset: Int = 0
     ): List<Track>
+
+    suspend fun getArtistIds(): List<String>
+
 }

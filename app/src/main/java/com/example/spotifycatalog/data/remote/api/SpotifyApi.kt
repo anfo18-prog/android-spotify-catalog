@@ -22,7 +22,7 @@ interface SpotifyApi {
     @GET("v1/artists/{id}/albums")
     suspend fun getAlbumsForArtist(
         @Path("id") artistId: String,
-        @Query("limit") limit: Int = 20,
+        @Query("limit") limit: Int = 3,
         @Query("offset") offset: Int = 0
     ): AlbumResponseDto
 

@@ -1,5 +1,6 @@
 package com.example.spotifycatalog.data.repository
 
+import com.example.spotifycatalog.data.local.datasource.MockDatasource
 import com.example.spotifycatalog.data.mapper.toDomain
 import com.example.spotifycatalog.data.remote.api.SpotifyApi
 import com.example.spotifycatalog.data.remote.datasource.SpotifyRemoteDataSource
@@ -10,7 +11,8 @@ import com.example.spotifycatalog.domain.repository.SpotifyRepository
 import javax.inject.Inject
 
 class SpotifyRepositoryImpl @Inject constructor(
-    private val remoteDataSource: SpotifyRemoteDataSource
+    private val remoteDataSource: SpotifyRemoteDataSource,
+    private val mockDatasource: MockDatasource
 ) : SpotifyRepository {
     override suspend fun getArtists(ids: List<String>): List<Artist> {
         val artistsResponse = remoteDataSource.getSeveralArtists(ids.joinToString(","))
@@ -29,4 +31,7 @@ class SpotifyRepositoryImpl @Inject constructor(
         val tracksResponse = remoteDataSource.getTracksForAlbum(albumId, limit, offset)
         return tracksResponse.items.map { it.toDomain() }
     }
+
+    override suspend fun getArtistIds(): List<String> =
+        mockDatasource.getArtistsIds()
 }
